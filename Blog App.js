@@ -30,6 +30,22 @@ app.get('/comments', (req, res) => {
     res.render('comments/index', { comments });
 })
 
+app.get('/comments/new', (req, res) => {
+    res.render('comments/new');
+})
+
+app.post('/comments', (req, res) => {
+    const { username, comment } = req.body;
+    comments.push({ username, comment, id: uuid() });
+    res.redirect('/comments');
+})
+
+app.get('/comments/:id', (req, res) => {
+    const { id } = req.params;
+    const comment = comments.find(c => c.id === id);
+    res.render('comments/show', { comment });
+})
+
 app.listen(3000, () => {
     console.log('ON PORT 3000!');
 })
